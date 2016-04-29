@@ -21,7 +21,7 @@
 #include <memory>
 
 // user include files
-#include "FWCore/Framework/interface/Frameworkfwd.h"
+//#include "FWCore/Framework/interface/Frameworkfwd.h" //COMMENTED OUT 4-19-2016
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 
 #include "FWCore/Framework/interface/Event.h"
@@ -41,7 +41,6 @@
 #include "DataFormats/JetReco/interface/PFJet.h"
 #include "DataFormats/JetReco/interface/PFJetCollection.h"
 #include "DataFormats/ParticleFlowCandidate/interface/PFCandidateFwd.h"
-#include "DataFormats/TrackReco/interface/TrackFwd.h"
 #include "DataFormats/Common/interface/ValueMap.h"
 //
 // class declaration
@@ -118,7 +117,7 @@ QGAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   for(auto jet = jets->begin();  jet != jets->end(); ++jet){
      edm::RefToBase<reco::Jet> jetRef(edm::Ref<reco::PFJetCollection>(jets, jet - jets->begin()));
      float qgLikelihood = (*qgHandle)[jetRef];
-	 qgplot->Fill(qgLikelihood);
+	 //qgplot->Fill(qgLikelihood);
 	 
   }
 
