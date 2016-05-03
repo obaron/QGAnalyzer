@@ -111,12 +111,14 @@ void
 QGAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    using namespace edm;
-  edm::Handle<reco::PFJetCollection> jets;    iEvent.getByToken(jetsToken, jets);
-  edm::Handle<edm::ValueMap<float>> qgHandle; iEvent.getByToken(qgToken, qgHandle);
-
+  edm::Handle<reco::PFJetCollection> jets;
+  iEvent.getByToken(jetsToken, jets);
+  edm::Handle<edm::ValueMap<float>> qgHandle;
+  iEvent.getByToken(qgToken, qgHandle);
+  
   for(auto jet = jets->begin();  jet != jets->end(); ++jet){
      edm::RefToBase<reco::Jet> jetRef(edm::Ref<reco::PFJetCollection>(jets, jet - jets->begin()));
-     float qgLikelihood = (*qgHandle)[jetRef];
+     //float qgLikelihood = (*qgHandle)[jetRef];
 	 //qgplot->Fill(qgLikelihood);
 	 
   }

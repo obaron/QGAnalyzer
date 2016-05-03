@@ -24,11 +24,38 @@ process.options   = cms.untracked.PSet(
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
+
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 #process.GlobalTag = GlobalTag(process.GlobalTag, '74X_dataRun2_Prompt_v2', '')
 #process.GlobalTag.globaltag = 'GR_R_44_V12::All'
 process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
 
+#######################
+# Quark gluon tagging #
+#   (added manually)  #
+#######################
+
+qgDatabaseVersion = 'v1' # check https://twiki.cern.ch/twiki/bin/viewauth/CMS/QGDataBaseVersion
+
+from CondCore.DBCommon.CondDBSetup_cfi import *
+QGPoolDBESSource = cms.ESSource("PoolDBESSource",
+      CondDBSetup,
+      toGet = cms.VPSet(),
+      connect = cms.string('frontier://FrontierProd/CMS_COND_PAT_000'),
+)
+
+for type in ['AK4PF','AK4PFchs_antib']:
+  QGPoolDBESSource.toGet.extend(cms.VPSet(cms.PSet(
+    record = cms.string('QGLikelihoodRcd'),
+    tag    = cms.string('QGLikelihoodObject_'+qgDatabaseVersion+'_'+type),
+    label  = cms.untracked.string('QGL_'+type)
+  )))
+
+###########
+#  Input  #
+###########
+
+  
 process.source = cms.Source("PoolSource",
                                 # replace 'myfile.root' with the source file you want to use
                                 fileNames = cms.untracked.vstring(
@@ -37,12 +64,18 @@ process.source = cms.Source("PoolSource",
                 ),
                             )
 
-
+############
+#  Output  #
+############
+							
+process.TFileService = cms.Service("TFileService",
+                                       fileName = cms.string('histodemo.root')
+                                   )							
+							
+							
 process.demo = cms.EDAnalyzer('QGAnalyzer',
 jetsInputTag = cms.InputTag("ak4PFJets") #added from http://uaf-2.t2.ucsd.edu/~ibloch/CMS2/NtupleMaker/python/jetMaker_cfi.py through comparison. It doesn't work though, so that's an issue.
 )
-process.TFileService = cms.Service("TFileService",
-                                       fileName = cms.string('histodemo.root')
-                                   )
+
 
 process.p = cms.Path(process.demo)
