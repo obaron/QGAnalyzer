@@ -60,7 +60,7 @@ process.source = cms.Source("PoolSource",
                                 # replace 'myfile.root' with the source file you want to use
                                 fileNames = cms.untracked.vstring(
             #'file:/afs/cern.ch/cms/Tutorials/TWIKI_DATA/TTJets_8TeV_53X.root'
-            'root://cmsxrootd.fnal.gov//store/data/Run2015D/JetHT/AOD/PromptReco-v3/000/256/630/00000/A20F1D45-3C5F-E511-8351-02163E0146AE.root'
+            'root://cmsxrootd.fnal.gov///store/mc/RunIISpring15DR74/MinBias_TuneCUETP8M1_13TeV-pythia8/GEN-SIM-RECODEBUG/NoPURealisticRecodebug_741_p1_mcRun2_Realistic_50ns_v0-v1/00000/06967C3F-4A53-E511-91B8-0025904C7DF6.root'
                 ),
                             )
 
